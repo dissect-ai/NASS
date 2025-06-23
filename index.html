@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NASS — Futuristic Wind Tunnel Demo</title>
+  <title>NASS — Futuristic Wind Tunnel Demo with Multiple Cars</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    /* Reset & base */
     html, body {
       margin: 0; padding: 0; height: 100%; background: #000;
       font-family: 'Orbitron', sans-serif;
@@ -14,7 +13,6 @@
       overflow-x: hidden;
       user-select: none;
     }
-
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -27,7 +25,7 @@
     header h1 {
       margin: 0; font-size: 2rem; color: #00f0ff;
       letter-spacing: 0.3em;
-      text-shadow: 0 0 10px #00f0ffaa;
+      text-shadow: 0 0 10px #00f0ffcc;
     }
     nav a {
       color: #00f0ffcc;
@@ -86,20 +84,22 @@
       transition: background 0.3s ease, box-shadow 0.3s ease;
       font-size: 1.2rem;
       margin-top: 1.5rem;
+      user-select: none;
     }
     .btn:hover {
       background: #00ffff;
       box-shadow: 0 0 40px #00ffffcc;
     }
 
-    /* 3D canvas fills viewport */
+    /* 3D canvas fills viewport below header */
     #windTunnelContainer {
       position: fixed;
       top: 70px; bottom: 0; left: 0; right: 0;
       z-index: 1;
-      pointer-events: none; /* disable interfering with UI */
+      pointer-events: none;
       overflow: visible;
       user-select: none;
+      background: transparent;
     }
 
     /* Data HUD container */
@@ -147,6 +147,17 @@
       color: #00ffff;
       letter-spacing: 0.1em;
     }
+
+    /* Car Switch Button container */
+    #carSwitchBtn {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      user-select: none;
+    }
+
   </style>
 </head>
 <body>
@@ -193,16 +204,18 @@
     <div class="dataRow"><div class="label">Battery Output:</div> <div id="batteryOutput" class="value">540 kW</div></div>
   </div>
 
+  <div id="carSwitchBtn">
+    <button class="btn" id="switchCar">Switch Car Design</button>
+  </div>
+
   <script type="module">
     import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
     import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/OrbitControls.js';
 
-    // Setup scene
+    // Scene & camera
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
 
-    // Camera
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 100);
     camera.position.set(5, 2.5, 8);
 
@@ -234,7 +247,7 @@
     directionalLight2.position.set(-10, 3, -10);
     scene.add(directionalLight2);
 
-    // Ground plane - reflective surface for tunnel floor effect
+    // Ground plane
     const planeGeo = new THREE.PlaneGeometry(20, 20);
     const planeMat = new THREE.MeshPhysicalMaterial({
       color: 0x001122,
@@ -250,7 +263,7 @@
     plane.receiveShadow = true;
     scene.add(plane);
 
-    // Wind tunnel transparent tube - cylinder with glass material
+    // Wind tunnel tube
     const tunnelGeo = new THREE.CylinderGeometry(3.2, 3.2, 10, 64, 1, true);
     const tunnelMat = new THREE.MeshPhysicalMaterial({
       color: 0x003355,
@@ -268,27 +281,136 @@
     tunnel.position.y = 1.5;
     scene.add(tunnel);
 
-    // Load car model
-    const loader = new GLTFLoader();
-    let carModel;
-    loader.load('https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Car/Car.gltf', gltf => {
-      carModel = gltf.scene;
-      carModel.scale.set(1.7, 1.7, 1.7);
-      carModel.position.y = 0;
-      carModel.castShadow = true;
-      carModel.traverse(child => {
-        if(child.isMesh){
-          child.castShadow = true;
-          child.receiveShadow = true;
-          // Give the car a slight neon emissive highlight
-          child.material.emissive = new THREE.Color(0x00ffff);
-          child.material.emissiveIntensity = 0.2;
-        }
-      });
-      scene.add(carModel);
+    // Create futuristic car designs (simple concept shapes)
+
+    // 1. Sleek low coupe
+    const car1 = new THREE.Group();
+    const body1Geo = new THREE.BoxGeometry(3, 0.7, 1.3);
+    const body1Mat = new THREE.MeshPhysicalMaterial({
+      color: 0x00ffff,
+      metalness: 0.9,
+      roughness: 0.1,
+      clearcoat: 1,
+      clearcoatRoughness: 0.05,
+      emissive: 0x0077aa,
+      emissiveIntensity: 0.3,
+      transparent: true,
+      opacity: 0.9,
+      flatShading: false,
+    });
+    const body1 = new THREE.Mesh(body1Geo, body1Mat);
+    body1.position.y = 0.35;
+    body1.castShadow = true;
+    body1.receiveShadow = true;
+    car1.add(body1);
+
+    const cockpit1Geo = new THREE.CylinderGeometry(0.8, 0.8, 0.6, 16, 1, true);
+    const cockpit1Mat = new THREE.MeshPhysicalMaterial({
+      color: 0x0099ff,
+      metalness: 0.5,
+      roughness: 0.1,
+      transparent: true,
+      opacity: 0.6,
+      side: THREE.DoubleSide,
+      emissive: 0x0055aa,
+      emissiveIntensity: 0.3
+    });
+    const cockpit1 = new THREE.Mesh(cockpit1Geo, cockpit1Mat);
+    cockpit1.rotation.z = Math.PI / 2;
+    cockpit1.position.set(0, 0.9, 0);
+    cockpit1.castShadow = true;
+    cockpit1.receiveShadow = true;
+    car1.add(cockpit1);
+
+    // 2. Bold SUV shape
+    const car2 = new THREE.Group();
+    const body2Geo = new THREE.BoxGeometry(3.5, 1.2, 1.6);
+    const body2Mat = new THREE.MeshPhysicalMaterial({
+      color: 0x00ffcc,
+      metalness: 0.85,
+      roughness: 0.15,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.1,
+      emissive: 0x007744,
+      emissiveIntensity: 0.25,
+      transparent: true,
+      opacity: 0.92,
+      flatShading: false,
+    });
+    const body2 = new THREE.Mesh(body2Geo, body2Mat);
+    body2.position.y = 0.6;
+    body2.castShadow = true;
+    body2.receiveShadow = true;
+    car2.add(body2);
+
+    const cockpit2Geo = new THREE.BoxGeometry(2, 0.7, 1.2);
+    const cockpit2Mat = new THREE.MeshPhysicalMaterial({
+      color: 0x009988,
+      metalness: 0.4,
+      roughness: 0.2,
+      transparent: true,
+      opacity: 0.7,
+      emissive: 0x005533,
+      emissiveIntensity: 0.3
+    });
+    const cockpit2 = new THREE.Mesh(cockpit2Geo, cockpit2Mat);
+    cockpit2.position.set(0, 1.1, 0);
+    cockpit2.castShadow = true;
+    cockpit2.receiveShadow = true;
+    car2.add(cockpit2);
+
+    // 3. Aerodynamic sedan with sharp edges
+    const car3 = new THREE.Group();
+    const body3Geo = new THREE.BoxGeometry(3.3, 0.8, 1.3);
+    const body3Mat = new THREE.MeshPhysicalMaterial({
+      color: 0x0099ff,
+      metalness: 0.95,
+      roughness: 0.08,
+      clearcoat: 1,
+      clearcoatRoughness: 0.05,
+      emissive: 0x004477,
+      emissiveIntensity: 0.3,
+      transparent: true,
+      opacity: 0.9,
+      flatShading: false,
+    });
+    const body3 = new THREE.Mesh(body3Geo, body3Mat);
+    body3.position.y = 0.4;
+    body3.castShadow = true;
+    body3.receiveShadow = true;
+    car3.add(body3);
+
+    const cockpit3Geo = new THREE.CylinderGeometry(0.6, 0.6, 1, 4);
+    const cockpit3Mat = new THREE.MeshPhysicalMaterial({
+      color: 0x0066cc,
+      metalness: 0.6,
+      roughness: 0.1,
+      transparent: true,
+      opacity: 0.65,
+      emissive: 0x003366,
+      emissiveIntensity: 0.25,
+      side: THREE.DoubleSide,
+    });
+    const cockpit3 = new THREE.Mesh(cockpit3Geo, cockpit3Mat);
+    cockpit3.position.set(0, 0.9, 0);
+    cockpit3.castShadow = true;
+    cockpit3.receiveShadow = true;
+    cockpit3.rotation.y = Math.PI / 4;
+    car3.add(cockpit3);
+
+    // Array to hold cars
+    const cars = [car1, car2, car3];
+    let currentCarIndex = 0;
+
+    // Add only the first car initially
+    scene.add(cars[currentCarIndex]);
+    cars.forEach(car => {
+      car.position.y = 0;
+      car.position.x = 0;
+      car.position.z = 0;
     });
 
-    // Airflow lines simulated with moving thin transparent planes (like wind ribbons)
+    // Airflow lines group
     const airflowGroup = new THREE.Group();
     scene.add(airflowGroup);
 
@@ -316,7 +438,7 @@
       airflowLines.push(line);
     }
 
-    // Animate airflow lines moving from left to right
+    // Animate airflow lines
     let airflowSpeed = 0.02;
 
     // Data HUD simulation values
@@ -325,7 +447,7 @@
     let efficiencyPercent = 92.4;
     let batteryOutputKw = 540;
 
-    // Update data panel elements
+    // Data panel elements
     const dragElem = document.getElementById('dragCoeff');
     const airflowElem = document.getElementById('airflowSpeed');
     const efficiencyElem = document.getElementById('efficiency');
@@ -333,6 +455,7 @@
 
     let lastTime = performance.now();
 
+    // Animate loop
     function animate(time){
       requestAnimationFrame(animate);
 
@@ -344,10 +467,8 @@
         }
       });
 
-      // Slowly rotate the car model if loaded
-      if(carModel){
-        carModel.rotation.y += 0.005;
-      }
+      // Rotate current car
+      cars[currentCarIndex].rotation.y += 0.005;
 
       // Update HUD data dynamically (simulate fluctuations)
       const now = performance.now();
@@ -367,13 +488,23 @@
       controls.update();
       renderer.render(scene, camera);
     }
-
     animate();
 
+    // Handle resize
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth/window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Switch car button logic
+    document.getElementById('switchCar').addEventListener('click', () => {
+      // Remove current car
+      scene.remove(cars[currentCarIndex]);
+      // Increment index
+      currentCarIndex = (currentCarIndex + 1) % cars.length;
+      // Add new car
+      scene.add(cars[currentCarIndex]);
     });
   </script>
 </body>

@@ -1,193 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NASS — Revolutionizing Car Design</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: radial-gradient(circle at center, #050505 0%, #0a0a0a 100%);
-      font-family: 'Orbitron', sans-serif;
-      color: white;
-      overflow-x: hidden;
-    }
+<main>
+  <section id="hero" style="margin-bottom: 3rem;">
+    <video autoplay muted loop style="width: 100%; border-radius: 16px; box-shadow: 0 0 30px #ff6f00aa;">
+      <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <h2 style="margin-top: 1rem; color: #ff6f00;">Experience Motion Redefined</h2>
+    <p style="color: #ccc; font-size: 1.2rem;">At NASS, we don’t just build cars — we sculpt the future.</p>
+  </section>
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
+  <section id="about" style="margin-bottom: 3rem;">
+    <h2>Who We Are</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+      <div style="flex: 1 1 400px; background: rgba(20,20,20,0.9); padding: 1.5rem; border-radius: 16px;">
+        <p>NASS is the future of automotive evolution — where form meets intelligence and motion becomes art. We craft concept vehicles powered by cutting-edge technology and sustainable innovation.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1618005198919-d3d4b77841a6?auto=format&fit=crop&w=600&q=80" alt="Concept car" style="border-radius: 16px; max-width: 400px; width: 100%; box-shadow: 0 0 15px rgba(255,111,0,0.5);">
+    </div>
+  </section>
 
-    header {
-      position: fixed;
-      width: 100%;
-      padding: 1rem 2rem;
-      background: rgba(10, 10, 10, 0.9);
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 0 20px rgba(255, 111, 0, 0.5);
-    }
+  <section id="tech" style="margin-bottom: 3rem;">
+    <h2>Technology</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+      <img src="https://images.unsplash.com/photo-1634023741154-45c3b9110731?auto=format&fit=crop&w=600&q=80" alt="Tech engine" style="border-radius: 16px; max-width: 400px; width: 100%; box-shadow: 0 0 15px rgba(255,111,0,0.5);">
+      <div style="flex: 1 1 400px; background: rgba(20,20,20,0.9); padding: 1.5rem; border-radius: 16px;">
+        <p>We integrate AI-assisted aerodynamics, next-gen electric drivetrains, and generative body design to create the impossible. Every car we envision is sculpted with performance and precision.</p>
+      </div>
+    </div>
+  </section>
 
-    header h1 {
-      font-size: 2rem;
-      color: #ff5f00;
-      letter-spacing: 4px;
-      margin: 0;
-    }
+  <section id="vision" style="margin-bottom: 3rem;">
+    <h2>Vision</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <div style="background: rgba(20,20,20,0.9); padding: 1.5rem; border-radius: 16px;">
+        <p>Our goal is bold — to replace static design with dynamic intelligence. NASS vehicles adapt, evolve, and perform beyond expectation in both form and function. This is not just design. It’s movement.</p>
+      </div>
+      <div style="background: rgba(30,30,30,0.9); padding: 1.5rem; border-radius: 16px;">
+        <p>From concept to command — every curve, line, and contour reflects a future-forward mindset. It’s time to accelerate transformation.</p>
+      </div>
+    </div>
+  </section>
 
-    nav a {
-      margin-left: 2rem;
-      color: #ff9900;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #fff;
-    }
-
-    main {
-      position: relative;
-      z-index: 10;
-      max-width: 1000px;
-      margin: 100vh auto 3rem auto;
-      padding: 3rem 2rem;
-      text-align: center;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.8), rgba(10,10,10,1));
-      border-radius: 20px;
-      box-shadow: 0 0 30px #ff6f00aa;
-    }
-
-    main h2 {
-      font-size: 2.5rem;
-      color: #ff6f00;
-      margin-bottom: 1rem;
-    }
-
-    main p {
-      font-size: 1.2rem;
-      color: #ccc;
-      line-height: 1.6;
-    }
-
-    .btn {
-      display: inline-block;
-      margin-top: 2rem;
-      padding: 1rem 2rem;
-      background: #ff6f00;
-      color: #000;
-      border: none;
-      border-radius: 40px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255, 111, 0, 0.6);
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .btn:hover {
-      background: #ffaa00;
-      box-shadow: 0 8px 25px rgba(255, 170, 0, 0.8);
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>NASS</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#tech">Technology</a>
-      <a href="#vision">Vision</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <main>
-    <section id="about">
-      <h2>Who We Are</h2>
-      <p>NASS is the future of automotive evolution — where form meets intelligence and motion becomes art. We craft concept vehicles powered by cutting-edge technology and sustainable innovation.</p>
-    </section>
-    <section id="tech">
-      <h2>Technology</h2>
-      <p>We integrate AI-assisted aerodynamics, next-gen electric drivetrains, and generative body design to create the impossible. Every car we envision is sculpted with performance and precision.</p>
-    </section>
-    <section id="vision">
-      <h2>Vision</h2>
-      <p>Our goal is bold — to replace static design with dynamic intelligence. NASS vehicles adapt, evolve, and perform beyond expectation in both form and function. This is not just design. It’s movement.</p>
-    </section>
-    <section id="contact">
-      <h2>Let's Collaborate</h2>
-      <p>Join us on our mission to shape tomorrow’s transport. We’re ready to work with creators, engineers, and dreamers alike. Reach out today.</p>
-      <a class="btn" href="mailto:contact@nasscars.com">Contact NASS</a>
-    </section>
-  </main>
-
-  <script type="module">
-    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/OrbitControls.js';
-    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
-
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0a0a0a);
-
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(3, 2, 6);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.shadowMap.enabled = true;
-    document.body.appendChild(renderer.domElement);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.5;
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 10, 7);
-    directionalLight.castShadow = true;
-    scene.add(directionalLight);
-
-    const loader = new GLTFLoader();
-    loader.load('https://models.readyplayer.me/62a22013c57ce9b77a150453.glb', (gltf) => {
-      const model = gltf.scene;
-      model.scale.set(2, 2, 2);
-      model.position.set(0, 0, 0);
-      model.traverse(child => {
-        if (child.isMesh) {
-          child.castShadow = true;
-        }
-      });
-      scene.add(model);
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
-</body>
-</html>
+  <section id="contact">
+    <h2>Let's Collaborate</h2>
+    <p>Join us on our mission to shape tomorrow’s transport. We’re ready to work with creators, engineers, and dreamers alike. Reach out today.</p>
+    <a class="btn" href="mailto:contact@nasscars.com">Contact NASS</a>
+  </section>
+</main>

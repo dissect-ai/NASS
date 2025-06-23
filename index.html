@@ -18,6 +18,13 @@
       overflow-x: hidden;
     }
 
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
     header {
       position: fixed;
       width: 100%;
@@ -48,15 +55,6 @@
 
     nav a:hover {
       color: #fff;
-    }
-
-    #container {
-      width: 100vw;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
     }
 
     main {
@@ -115,8 +113,6 @@
     </nav>
   </header>
 
-  <div id="container"></div>
-
   <main>
     <section id="about">
       <h2>Who We Are</h2>
@@ -137,93 +133,48 @@
     </section>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/controls/OrbitControls.min.js"></script>
-  <script>
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
+    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/OrbitControls.js';
+    import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/loaders/GLTFLoader.js';
+
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0a0a0a);
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(6, 3, 8);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(3, 2, 6);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
-    document.getElementById('container').appendChild(renderer.domElement);
+    document.body.appendChild(renderer.domElement);
 
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.2;
-    controls.minDistance = 3;
-    controls.maxDistance = 15;
-    controls.maxPolarAngle = Math.PI / 2.2;
+    controls.autoRotateSpeed = 1.5;
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    const spotLight = new THREE.SpotLight(0xff6f00, 1.2);
-    spotLight.position.set(10, 20, 10);
-    spotLight.castShadow = true;
-    scene.add(spotLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7);
+    directionalLight.castShadow = true;
+    scene.add(directionalLight);
 
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(100, 100),
-      new THREE.ShadowMaterial({ opacity: 0.2 })
-    );
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    const car = new THREE.Group();
-
-    const bodyGeometry = new THREE.BoxGeometry(4.4, 1, 2);
-    const bodyMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0xff6f00,
-      metalness: 0.95,
-      roughness: 0.15,
-      clearcoat: 1,
-      clearcoatRoughness: 0.05,
+    const loader = new GLTFLoader();
+    loader.load('https://models.readyplayer.me/62a22013c57ce9b77a150453.glb', (gltf) => {
+      const model = gltf.scene;
+      model.scale.set(2, 2, 2);
+      model.position.set(0, 0, 0);
+      model.traverse(child => {
+        if (child.isMesh) {
+          child.castShadow = true;
+        }
+      });
+      scene.add(model);
     });
-    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-    body.position.y = 1;
-    body.castShadow = true;
-    car.add(body);
-
-    const cabinGeometry = new THREE.BoxGeometry(2.5, 0.7, 1.6);
-    const cabinMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x111111,
-      metalness: 0,
-      roughness: 0.1,
-      transmission: 0.9,
-      opacity: 0.75,
-      transparent: true,
-      clearcoat: 1,
-    });
-    const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
-    cabin.position.set(0, 1.5, 0);
-    cabin.castShadow = true;
-    car.add(cabin);
-
-    const wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.4, 32);
-    const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
-    const wheelPositions = [
-      [-1.7, 0.5, -0.9],
-      [1.7, 0.5, -0.9],
-      [-1.7, 0.5, 0.9],
-      [1.7, 0.5, 0.9],
-    ];
-    wheelPositions.forEach(pos => {
-      const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-      wheel.rotation.z = Math.PI / 2;
-      wheel.position.set(...pos);
-      wheel.castShadow = true;
-      car.add(wheel);
-    });
-
-    scene.add(car);
 
     function animate() {
       requestAnimationFrame(animate);

@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NASS Automotive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif;
       background: #0a0c10;
@@ -43,15 +39,9 @@
       font-weight: 600;
       transition: color 0.3s ease;
     }
-    nav a:hover {
-      color: #00f0ff;
-    }
-    main {
-      padding: 4rem 5%;
-    }
-    section {
-      margin-bottom: 5rem;
-    }
+    nav a:hover { color: #00f0ff; }
+    main { padding: 4rem 5%; }
+    section { margin-bottom: 5rem; }
     h2 {
       font-size: 2.5rem;
       margin-bottom: 1.2rem;
@@ -77,9 +67,7 @@
       color: white;
       text-shadow: 0 0 10px black;
     }
-    .hero-content h2 {
-      font-size: 3rem;
-    }
+    .hero-content h2 { font-size: 3rem; }
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -110,9 +98,7 @@
       margin-top: 1rem;
       transition: background 0.3s;
     }
-    .btn:hover {
-      background: #00d0e0;
-    }
+    .btn:hover { background: #00d0e0; }
   </style>
 </head>
 <body>
@@ -126,10 +112,11 @@
       <a href="#contact">Contact</a>
     </nav>
   </header>
+
   <main>
     <section class="hero">
       <video autoplay muted loop>
-        <source src="https://cdn.pixabay.com/vimeo/421393435/futuristic-technology-24674.mp4?width=1920&hash=b16c3d219b850d6f97aa51a63a7c72201d9e2e15" type="video/mp4">
+        <source src="media/hero-windtunnel.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div class="hero-content">
@@ -144,7 +131,7 @@
         <div class="card">
           <p>NASS is redefining transportation with adaptive intelligence, zero-emission propulsion, and morphing exteriors engineered by AI and quantum simulation.</p>
         </div>
-        <img src="https://images.unsplash.com/photo-1667480302633-b05cb328bf55?auto=format&fit=crop&w=800&q=80" alt="Futuristic Car" style="width: 100%; border-radius: 14px;">
+        <img src="images/nass-futuristic-car.jpg" alt="Futuristic Car" style="width: 100%; border-radius: 14px;" />
       </div>
     </section>
 
@@ -162,9 +149,14 @@
     <section id="tech">
       <h2>Technology</h2>
       <div class="grid-2">
-        <img src="https://images.unsplash.com/photo-1631605146164-99e9f0db9189?auto=format&fit=crop&w=800&q=80" alt="Tech" style="width: 100%; border-radius: 14px;">
+        <img src="images/future-tech.jpg" alt="Tech Render" style="width: 100%; border-radius: 14px;" />
         <div class="card">
-          <p>We use AI wind tunnel simulations, quantum battery optimization, nanomaterials, and evolving designs that adapt to their environment. The result: machines that are intelligent, beautiful, and brutally fast.</p>
+          <p>NASS integrates AI-driven fluid dynamics simulations directly in the design phase, resulting in optimized drag coefficients as low as 0.17 Cd. Quantum-accelerated battery modules provide rapid charging and temperature stability across varied climates.</p>
+          <ul style="margin-top: 1rem; padding-left: 1rem;">
+            <li>🔧 3D-printed graphene-enhanced chassis</li>
+            <li>🌬️ Real-time airflow visualization (wind tunnel tested)</li>
+            <li>⚡ 600+ miles solid-state range with <strong>regenerative suspension</strong></li>
+          </ul>
         </div>
       </div>
     </section>

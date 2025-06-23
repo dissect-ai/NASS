@@ -1,504 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NASS | Future Automotive Innovation</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet" />
-<style>
-  /* Reset & base */
-  *, *::before, *::after {
-    box-sizing: border-box;
-  }
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Roboto', sans-serif;
-    background: #0a0f15;
-    color: #a0b0c0;
-    scroll-behavior: smooth;
-  }
-  a {
-    color: inherit; text-decoration: none;
-  }
-  a:hover {
-    color: #7aa3cc;
-  }
-
-  /* Header */
-  header {
-    position: fixed; top: 0; left: 0; right: 0;
-    background: rgba(10, 15, 21, 0.95);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 2rem;
-    z-index: 1000;
-    box-shadow: 0 0 20px #223344bb;
-  }
-  header h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 1.8rem;
-    letter-spacing: 0.3em;
-    color: #7aa3cc;
-    user-select: none;
-  }
-  nav a {
-    font-weight: 500;
-    margin-left: 2rem;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-
-  /* Main content */
-  main {
-    margin-top: 70px;
-    max-width: 1200px;
-    padding: 2rem 3rem 4rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  section {
-    background: linear-gradient(135deg, #121924, #1c2433);
-    border-radius: 16px;
-    padding: 3rem 3rem 4rem;
-    box-shadow: 0 0 20px #223344cc;
-    margin-bottom: 4rem;
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-  section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  section h2 {
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    color: #7aa3cc;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 0 10px #7aa3ccaa;
-  }
-  section p {
-    font-size: 1.3rem;
-    line-height: 1.8;
-    color: #a0b0c0cc;
-    max-width: 900px;
-    user-select: text;
-  }
-  
-  /* Buttons */
-  .btn {
-    display: inline-block;
-    background: #506f99;
-    color: #d6e2ff;
-    font-weight: 700;
-    border-radius: 40px;
-    padding: 1rem 2.5rem;
-    box-shadow: 0 0 15px #40577a;
-    cursor: pointer;
-    font-size: 1.3rem;
-    margin-top: 2rem;
-    user-select: none;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
-  }
-  .btn:hover {
-    background: #7a9dd9;
-    box-shadow: 0 0 30px #7a9dd9cc;
-    color: #0f1a2b;
-  }
-
-  /* Wind Tunnel Section */
-  #windTunnelSection {
-    position: relative;
-    height: 600px;
-    padding: 0;
-    background: #0c1524;
-    border-radius: 0;
-    overflow: visible;
-  }
-  #windTunnelSection h2 {
-    padding: 2rem 3rem 0 3rem;
-    user-select: none;
-  }
-  #windTunnelContainer {
-    width: 100%;
-    height: 500px;
-    background: linear-gradient(180deg, #0c1524 0%, #122338 100%);
-    box-shadow: inset 0 0 60px #335577aa;
-    user-select: none;
-  }
-  #dataPanel {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    width: 320px;
-    background: rgba(60, 80, 110, 0.18);
-    border: 1px solid #507ea455;
-    border-radius: 12px;
-    padding: 1.2rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #a3b7d1;
-    text-shadow: 0 0 6px #a3b7d1cc;
-    z-index: 20;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 40px #507ea455;
-  }
-  #dataPanel h3 {
-    margin-top: 0; margin-bottom: 1rem;
-    font-size: 1.8rem;
-    color: #9abbe8;
-    text-shadow: 0 0 8px #9abbe8cc;
-    user-select: none;
-  }
-  #dataPanel .dataRow {
-    display: flex;
-    justify-content: space-between;
-    margin: 0.35rem 0;
-    border-bottom: 1px solid #507ea422;
-    padding-bottom: 0.4rem;
-  }
-  #dataPanel .dataRow:last-child {
-    border-bottom: none;
-  }
-  #dataPanel .label {
-    color: #7fa5ce;
-  }
-  #dataPanel .value {
-    font-family: 'Orbitron', monospace;
-    color: #7aa3cc;
-    letter-spacing: 0.1em;
-  }
-
-  /* Switch Car button */
-  #carSwitchBtn {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    user-select: none;
-  }
-  #carSwitchBtn button {
-    font-family: 'Orbitron', sans-serif;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    main {
-      padding: 1.5rem 1.5rem 3rem;
-    }
-    section {
-      padding: 2rem 1.5rem 3rem;
-      margin-bottom: 3rem;
-    }
-    #dataPanel {
-      position: static;
-      width: auto;
-      margin: 1rem auto 2rem auto;
-      text-align: center;
-      box-shadow: none;
-      border: none;
-      backdrop-filter: none;
-      color: #a0b0c0;
-    }
-    #carSwitchBtn {
-      position: static;
-      margin: 0 auto;
-      text-align: center;
-    }
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <h1>N A S S</h1>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#technology">Technology</a>
-    <a href="#vision">Vision</a>
-    <a href="#windTunnelSection">Wind Tunnel</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
 <main>
-  <section id="about" class="visible">
-    <h2>Who We Are</h2>
-    <p>NASS pioneers the automotive future by building adaptive, intelligent, zero-emission cars with shape-shifting bodies and sentient AI integration.</p>
-  </section>
-
-  <section id="technology" class="visible">
-    <h2>Technology</h2>
-    <p>We engineer vehicles with AI-driven aerodynamics, quantum-enhanced batteries, and nanomaterial exteriors that morph based on driving conditions.</p>
-  </section>
-
-  <section id="vision" class="visible">
-    <h2>Vision</h2>
-    <p>Our vision is a world where cars don’t just transport, they learn, evolve, and protect their occupants with smart, dynamic design.</p>
-  </section>
-
-  <section id="windTunnelSection">
-    <h2>Wind Tunnel Simulation</h2>
-    <div id="windTunnelContainer"></div>
-
-    <div id="dataPanel" aria-label="Wind tunnel simulation data panel">
-      <h3>Wind Tunnel Metrics</h3>
-      <div class="dataRow"><div class="label">Drag Coefficient:</div> <div id="dragCoeff" class="value">0.23</div></div>
-      <div class="dataRow"><div class="label">Airflow Speed:</div> <div id="airflowSpeed" class="value">130 km/h</div></div>
-      <div class="dataRow"><div class="label">Efficiency:</div> <div id="efficiency" class="value">92.4%</div></div>
-      <div class="dataRow"><div class="label">Battery Output:</div> <div id="batteryOutput" class="value">540 kW</div></div>
-    </div>
-
-    <div id="carSwitchBtn">
-      <button class="btn" id="switchCar" aria-label="Switch car design">Switch Car Design</button>
+  <section id="hero" style="margin-bottom: 3rem; position: relative; overflow: hidden;">
+    <video autoplay muted loop style="width: 100%; border-radius: 16px; box-shadow: 0 0 40px #00f0ffaa; object-fit: cover; max-height: 80vh;">
+      <source src="https://cdn.pixabay.com/vimeo/421393435/futuristic-technology-24674.mp4?width=1920&hash=b16c3d219b850d6f97aa51a63a7c72201d9e2e15" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div style="position: absolute; bottom: 10%; left: 5%; z-index: 10;">
+      <h2 style="color: #00f0ff; font-size: 3rem; margin: 0; text-shadow: 0 0 10px #00f0ff;">Experience the Future of Motion</h2>
+      <p style="color: #fff; font-size: 1.3rem; max-width: 600px; text-shadow: 0 0 10px black;">NASS doesn’t just build cars — we sculpt intelligence, speed, and sustainability into futuristic machines.</p>
     </div>
   </section>
 
-  <section id="contact" class="visible">
-    <h2>Let's Collaborate</h2>
-    <p>If you're a visionary engineer, designer, or investor, join us to revolutionize transport together.</p>
-    <a href="mailto:contact@nasscars.com" class="btn" aria-label="Contact NASS via email">Contact NASS</a>
+  <section id="about" style="margin-bottom: 3rem;">
+    <h2 style="color: #00f0ff;">Who We Are</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+      <div style="flex: 1 1 400px; background: linear-gradient(135deg, #0f0f0f, #1a1a1a); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff80;">
+        <p style="font-size: 1.1rem; color: #e0e0e0;">NASS is pioneering the future of automotive design. We build cars with adaptive intelligence, zero-emission propulsion, and body morphing capabilities.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1667480302633-b05cb328bf55?auto=format&fit=crop&w=800&q=80" alt="Futuristic car" style="border-radius: 16px; max-width: 450px; width: 100%; box-shadow: 0 0 20px #00f0ff80;">
+    </div>
+  </section>
+
+  <section id="team" style="margin-bottom: 3rem;">
+    <h2 style="color: #00f0ff;">The NASS Team</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Akhilesh – Founder & Systems Engineer</div>
+      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Aariz – Powertrain Architect</div>
+      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Nikhil – AI & Control Systems</div>
+      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Subrat – Materials & Nanostructure</div>
+      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Shrehas – Simulation & Aerodynamics</div>
+    </div>
+  </section>
+
+  <section id="tech" style="margin-bottom: 3rem;">
+    <h2 style="color: #00f0ff;">Technology</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
+      <img src="https://images.unsplash.com/photo-1631605146164-99e9f0db9189?auto=format&fit=crop&w=800&q=80" alt="Futuristic engine" style="border-radius: 16px; max-width: 450px; width: 100%; box-shadow: 0 0 20px #00f0ff80;">
+      <div style="flex: 1 1 400px; background: linear-gradient(135deg, #111, #222); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff60;">
+        <p style="font-size: 1.1rem; color: #e0e0e0;">We use AI-driven wind-tunnel simulations, active materials that change shape during driving, and quantum algorithms to craft each component. These are not just cars — they’re sentient machines.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="vision" style="margin-bottom: 3rem;">
+    <h2 style="color: #00f0ff;">Vision</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <div style="background: linear-gradient(135deg, #121212, #1f1f1f); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff50;">
+        <p style="color: #d0d0d0;">Our designs are guided by the belief that vehicles should evolve. From self-healing exteriors to biometric cockpit interfaces, we redefine what's possible.</p>
+      </div>
+      <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff50;">
+        <p style="color: #d0d0d0;">Each model integrates nanostructure batteries, reactive paint, and intelligent geometry. Welcome to the post-car era — engineered by NASS.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 style="color: #00f0ff;">Let's Collaborate</h2>
+    <p style="color: #ccc;">If you're a designer, engineer, investor, or visionary, we want to work with you. Let’s revolutionize mobility together.</p>
+    <a class="btn" href="mailto:contact@nasscars.com" style="background: #00f0ff; color: #000; padding: 1rem 2rem; border-radius: 32px; font-weight: bold; font-size: 1.1rem; display: inline-block; margin-top: 1rem; text-decoration: none; box-shadow: 0 0 20px #00f0ffaa;">Contact NASS</a>
   </section>
 </main>
-
-<script type="module">
-  import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.module.js';
-  import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.153.0/examples/jsm/controls/OrbitControls.js';
-
-  // Setup scene, camera, renderer
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0a0f15);
-
-  const container = document.getElementById('windTunnelContainer');
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-
-  const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-  camera.position.set(6, 3, 9);
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(width, height);
-  renderer.shadowMap.enabled = true;
-  container.appendChild(renderer.domElement);
-
-  // Controls
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.autoRotate = true;
-  controls.autoRotateSpeed = 0.9;
-  controls.minDistance = 4;
-  controls.maxDistance = 15;
-
-  // Lights
-  const ambientLight = new THREE.AmbientLight(0x667788, 0.35);
-  scene.add(ambientLight);
-
-  const directionalLight1 = new THREE.DirectionalLight(0x99aabb, 0.75);
-  directionalLight1.position.set(10, 8, 10);
-  directionalLight1.castShadow = true;
-  directionalLight1.shadow.mapSize.width = 2048;
-  directionalLight1.shadow.mapSize.height = 2048;
-  scene.add(directionalLight1);
-
-  const directionalLight2 = new THREE.DirectionalLight(0x446677, 0.5);
-  directionalLight2.position.set(-10, 4, -10);
-  scene.add(directionalLight2);
-
-  // Ground plane
-  const planeGeo = new THREE.PlaneGeometry(25, 25);
-  const planeMat = new THREE.MeshPhysicalMaterial({
-    color: 0x1c2a3b,
-    metalness: 0.85,
-    roughness: 0.25,
-    clearcoat: 1,
-    clearcoatRoughness: 0.1,
-    reflectivity: 0.7
-  });
-  const plane = new THREE.Mesh(planeGeo, planeMat);
-  plane.rotation.x = -Math.PI / 2;
-  plane.position.y = -0.75;
-  plane.receiveShadow = true;
-  scene.add(plane);
-
-  // Wind tunnel tube (transparent cylinder)
-  const tunnelGeo = new THREE.CylinderGeometry(3.5, 3.5, 11, 64, 1, true);
-  const tunnelMat = new THREE.MeshPhysicalMaterial({
-    color: 0x223344,
-    transparent: true,
-    opacity: 0.15,
-    roughness: 0.1,
-    metalness: 0.5,
-    clearcoat: 1,
-    clearcoatRoughness: 0.05,
-    reflectivity: 0.6,
-    side: THREE.BackSide,
-    depthWrite: false
-  });
-  const tunnel = new THREE.Mesh(tunnelGeo, tunnelMat);
-  tunnel.position.y = 1.5;
-  scene.add(tunnel);
-
-  // Helper function to create car models with some style
-
-  function createCarModel(color, bodyHeight = 0.7, bodyLength = 3, bodyWidth = 1.3, cockpitOpacity = 0.65) {
-    const car = new THREE.Group();
-
-    const bodyGeo = new THREE.BoxGeometry(bodyLength, bodyHeight, bodyWidth);
-    const bodyMat = new THREE.MeshPhysicalMaterial({
-      color,
-      metalness: 0.85,
-      roughness: 0.15,
-      clearcoat: 1,
-      clearcoatRoughness: 0.1,
-      emissive: new THREE.Color(color).multiplyScalar(0.1),
-      transparent: true,
-      opacity: 0.95,
-      flatShading: false,
-    });
-    const body = new THREE.Mesh(bodyGeo, bodyMat);
-    body.position.y = bodyHeight / 2;
-    body.castShadow = true;
-    body.receiveShadow = true;
-    car.add(body);
-
-    const cockpitGeo = new THREE.CylinderGeometry(bodyWidth / 2, bodyWidth / 2, bodyLength * 0.7, 16, 1, true);
-    const cockpitMat = new THREE.MeshPhysicalMaterial({
-      color: 0x2c3e50,
-      metalness: 0.5,
-      roughness: 0.25,
-      transparent: true,
-      opacity: cockpitOpacity,
-      emissive: 0x112233,
-      emissiveIntensity: 0.15,
-      side: THREE.DoubleSide,
-    });
-    const cockpit = new THREE.Mesh(cockpitGeo, cockpitMat);
-    cockpit.rotation.z = Math.PI / 2;
-    cockpit.position.set(0, bodyHeight * 0.95, 0);
-    cockpit.castShadow = true;
-    cockpit.receiveShadow = true;
-    car.add(cockpit);
-
-    return car;
-  }
-
-  // Create three cars with different shades of blue/grey
-  const cars = [
-    createCarModel(0x577da8), // Sleek blue
-    createCarModel(0x5a8cad, 1.2, 3.5, 1.6, 0.7), // SUV style
-    createCarModel(0x446e96, 0.8, 3.3, 1.3, 0.6), // Aerodynamic sedan
-  ];
-
-  let currentCarIndex = 0;
-  scene.add(cars[currentCarIndex]);
-
-  // Airflow lines group
-  const airflowGroup = new THREE.Group();
-  scene.add(airflowGroup);
-
-  function createAirflowLine(yPos, delay) {
-    const geo = new THREE.PlaneGeometry(0.05, 3.8);
-    const mat = new THREE.MeshBasicMaterial({
-      color: 0x4fc3f7,
-      transparent: true,
-      opacity: 0.12,
-      side: THREE.DoubleSide,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(-5, yPos, 0);
-    mesh.rotation.y = Math.PI / 2;
-    mesh.userData = { delay };
-    airflowGroup.add(mesh);
-    return mesh;
-  }
-
-  const airflowLines = [];
-  for(let i = -1.6; i <= 1.6; i += 0.65){
-    airflowLines.push(createAirflowLine(i, i*230));
-  }
-
-  // Animate airflow lines speed
-  let airflowSpeed = 0.027;
-
-  // Data HUD simulation values
-  let dragCoeff = 0.23;
-  let airflowSpeedKmh = 130;
-  let efficiencyPercent = 92.4;
-  let batteryOutputKw = 540;
-
-  // Data panel elements
-  const dragElem = document.getElementById('dragCoeff');
-  const airflowElem = document.getElementById('airflowSpeed');
-  const efficiencyElem = document.getElementById('efficiency');
-  const batteryElem = document.getElementById('batteryOutput');
-
-  let lastTime = performance.now();
-
-  function animate(time) {
-    requestAnimationFrame(animate);
-
-    airflowLines.forEach(line => {
-      line.position.x += airflowSpeed;
-      if(line.position.x > 6){
-        line.position.x = -5 - (line.userData.delay * 0.012);
-      }
-    });
-
-    cars[currentCarIndex].rotation.y += 0.006;
-
-    // Update HUD data dynamically (simulate small fluctuations)
-    const now = performance.now();
-    if(now - lastTime > 1000){
-      lastTime = now;
-      dragCoeff = (0.22 + Math.random() * 0.02).toFixed(3);
-      airflowSpeedKmh = (125 + Math.random() * 10).toFixed(1);
-      efficiencyPercent = (91 + Math.random() * 3).toFixed(1);
-      batteryOutputKw = (530 + Math.random() * 30).toFixed(0);
-
-      dragElem.textContent = dragCoeff;
-      airflowElem.textContent = `${airflowSpeedKmh} km/h`;
-      efficiencyElem.textContent = `${efficiencyPercent}%`;
-      batteryElem.textContent = `${batteryOutputKw} kW`;
-    }
-
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Handle window resize
-  window.addEventListener('resize', () => {
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-  });
-
-  // Switch car button logic
-  document.getElementById('switchCar').addEventListener('click', () => {
-    scene.remove(cars[currentCarIndex]);
-    currentCarIndex = (currentCarIndex + 1) % cars.length;
-    scene.add(cars[currentCarIndex]);
-  });
-
-  // Fade-in sections on scroll
-  function revealSections() {
-    document.querySelectorAll('section').forEach(section => {
-      const triggerBottom = window.innerHeight * 0.85;
-      const sectionTop = section.getBoundingClientRect().top;
-      if(sectionTop < triggerBottom) {
-        section.classList.add('visible');
-      }
-    });
-  }
-  window.addEventListener('scroll', revealSections);
-  window.addEventListener('load', revealSections);
-
-</script>
-</body>
-</html>

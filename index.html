@@ -1,61 +1,191 @@
-<main>
-  <section id="hero" style="margin-bottom: 3rem; position: relative; overflow: hidden;">
-    <video autoplay muted loop style="width: 100%; border-radius: 16px; box-shadow: 0 0 40px #00f0ffaa; object-fit: cover; max-height: 80vh;">
-      <source src="https://cdn.pixabay.com/vimeo/421393435/futuristic-technology-24674.mp4?width=1920&hash=b16c3d219b850d6f97aa51a63a7c72201d9e2e15" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <div style="position: absolute; bottom: 10%; left: 5%; z-index: 10;">
-      <h2 style="color: #00f0ff; font-size: 3rem; margin: 0; text-shadow: 0 0 10px #00f0ff;">Experience the Future of Motion</h2>
-      <p style="color: #fff; font-size: 1.3rem; max-width: 600px; text-shadow: 0 0 10px black;">NASS doesn’t just build cars — we sculpt intelligence, speed, and sustainability into futuristic machines.</p>
-    </div>
-  </section>
-
-  <section id="about" style="margin-bottom: 3rem;">
-    <h2 style="color: #00f0ff;">Who We Are</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
-      <div style="flex: 1 1 400px; background: linear-gradient(135deg, #0f0f0f, #1a1a1a); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff80;">
-        <p style="font-size: 1.1rem; color: #e0e0e0;">NASS is pioneering the future of automotive design. We build cars with adaptive intelligence, zero-emission propulsion, and body morphing capabilities.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASS Automotive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0c10;
+      color: #cdd6f4;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    header {
+      background: #0a0c10;
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1a1d27;
+      box-shadow: 0 5px 30px rgba(0,240,255,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: #00f0ff;
+      letter-spacing: 4px;
+    }
+    nav a {
+      color: #cdd6f4;
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00f0ff;
+    }
+    main {
+      padding: 4rem 5%;
+    }
+    section {
+      margin-bottom: 5rem;
+    }
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.2rem;
+      color: #00f0ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 0 40px rgba(0,240,255,0.2);
+    }
+    .hero video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      max-height: 80vh;
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 8%;
+      left: 5%;
+      color: white;
+      text-shadow: 0 0 10px black;
+    }
+    .hero-content h2 {
+      font-size: 3rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+    .card {
+      background: #10131a;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,240,255,0.1);
+    }
+    .team-member {
+      background: #12161e;
+      padding: 1.2rem;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .btn {
+      background: #00f0ff;
+      color: #0a0c10;
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #00d0e0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NASS</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#team">Team</a>
+      <a href="#tech">Technology</a>
+      <a href="#vision">Vision</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <video autoplay muted loop>
+        <source src="https://cdn.pixabay.com/vimeo/421393435/futuristic-technology-24674.mp4?width=1920&hash=b16c3d219b850d6f97aa51a63a7c72201d9e2e15" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-content">
+        <h2>Experience the Future of Motion</h2>
+        <p>NASS sculpts intelligence, speed, and sustainability into every vehicle.</p>
       </div>
-      <img src="https://images.unsplash.com/photo-1667480302633-b05cb328bf55?auto=format&fit=crop&w=800&q=80" alt="Futuristic car" style="border-radius: 16px; max-width: 450px; width: 100%; box-shadow: 0 0 20px #00f0ff80;">
-    </div>
-  </section>
+    </section>
 
-  <section id="team" style="margin-bottom: 3rem;">
-    <h2 style="color: #00f0ff;">The NASS Team</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
-      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Akhilesh – Founder & Systems Engineer</div>
-      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Aariz – Powertrain Architect</div>
-      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Nikhil – AI & Control Systems</div>
-      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Subrat – Materials & Nanostructure</div>
-      <div style="background: #121212; padding: 1.2rem 1.5rem; border-radius: 14px; box-shadow: 0 0 10px #00f0ff50; min-width: 180px; text-align: center; color: #eee;">Shrehas – Simulation & Aerodynamics</div>
-    </div>
-  </section>
-
-  <section id="tech" style="margin-bottom: 3rem;">
-    <h2 style="color: #00f0ff;">Technology</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;">
-      <img src="https://images.unsplash.com/photo-1631605146164-99e9f0db9189?auto=format&fit=crop&w=800&q=80" alt="Futuristic engine" style="border-radius: 16px; max-width: 450px; width: 100%; box-shadow: 0 0 20px #00f0ff80;">
-      <div style="flex: 1 1 400px; background: linear-gradient(135deg, #111, #222); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff60;">
-        <p style="font-size: 1.1rem; color: #e0e0e0;">We use AI-driven wind-tunnel simulations, active materials that change shape during driving, and quantum algorithms to craft each component. These are not just cars — they’re sentient machines.</p>
+    <section id="about">
+      <h2>Who We Are</h2>
+      <div class="grid-2">
+        <div class="card">
+          <p>NASS is redefining transportation with adaptive intelligence, zero-emission propulsion, and morphing exteriors engineered by AI and quantum simulation.</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1667480302633-b05cb328bf55?auto=format&fit=crop&w=800&q=80" alt="Futuristic Car" style="width: 100%; border-radius: 14px;">
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="vision" style="margin-bottom: 3rem;">
-    <h2 style="color: #00f0ff;">Vision</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-      <div style="background: linear-gradient(135deg, #121212, #1f1f1f); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff50;">
-        <p style="color: #d0d0d0;">Our designs are guided by the belief that vehicles should evolve. From self-healing exteriors to biometric cockpit interfaces, we redefine what's possible.</p>
+    <section id="team">
+      <h2>The NASS Team</h2>
+      <div class="grid-2">
+        <div class="team-member">Akhilesh – Systems Engineer</div>
+        <div class="team-member">Aariz – Founder & Powertrain Architect</div>
+        <div class="team-member">Nikhil – Founder & AI & Control Systems</div>
+        <div class="team-member">Subrat – Materials & Nanostructure</div>
+        <div class="team-member">Shrehas – Simulation & Aerodynamics</div>
       </div>
-      <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); padding: 1.5rem; border-radius: 16px; box-shadow: 0 0 15px #00f0ff50;">
-        <p style="color: #d0d0d0;">Each model integrates nanostructure batteries, reactive paint, and intelligent geometry. Welcome to the post-car era — engineered by NASS.</p>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact">
-    <h2 style="color: #00f0ff;">Let's Collaborate</h2>
-    <p style="color: #ccc;">If you're a designer, engineer, investor, or visionary, we want to work with you. Let’s revolutionize mobility together.</p>
-    <a class="btn" href="mailto:contact@nasscars.com" style="background: #00f0ff; color: #000; padding: 1rem 2rem; border-radius: 32px; font-weight: bold; font-size: 1.1rem; display: inline-block; margin-top: 1rem; text-decoration: none; box-shadow: 0 0 20px #00f0ffaa;">Contact NASS</a>
-  </section>
-</main>
+    <section id="tech">
+      <h2>Technology</h2>
+      <div class="grid-2">
+        <img src="https://images.unsplash.com/photo-1631605146164-99e9f0db9189?auto=format&fit=crop&w=800&q=80" alt="Tech" style="width: 100%; border-radius: 14px;">
+        <div class="card">
+          <p>We use AI wind tunnel simulations, quantum battery optimization, nanomaterials, and evolving designs that adapt to their environment. The result: machines that are intelligent, beautiful, and brutally fast.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision">
+      <h2>Vision</h2>
+      <div class="grid-2">
+        <div class="card">
+          <p>Cars that evolve. Our vision includes active geometry, AI-powered driving assistants, and a new era of mobility — one that’s efficient, emotional, and electric.</p>
+        </div>
+        <div class="card">
+          <p>We believe the best cars don’t just move you — they move the world. Our mission is a planet full of intelligent vehicles built for the 22nd century.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Let's Collaborate</h2>
+      <p>Are you an engineer, investor, or dreamer? Join us to redefine motion itself.</p>
+      <a href="mailto:contact@nasscars.com" class="btn">Contact Us</a>
+    </section>
+  </main>
+</body>
+</html>
